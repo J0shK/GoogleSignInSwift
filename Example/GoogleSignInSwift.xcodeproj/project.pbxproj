@@ -9,9 +9,11 @@
 /* Begin PBXBuildFile section */
 		230F84F2CE4D07F2CDA7F4AF /* Pods_GoogleSignInSwift_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72BF246D94EE555231E4396E /* Pods_GoogleSignInSwift_Tests.framework */; };
 		48350597C8F9E8EA9A09D070 /* Pods_GoogleSignInSwift_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5F43F3F121F0F8C96A5FBB2 /* Pods_GoogleSignInSwift_Example.framework */; };
+		4D658DD9252C4AB600EA25E0 /* TokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D658DD8252C4AB600EA25E0 /* TokenView.swift */; };
+		4D658DFB252CE63900EA25E0 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D658DFA252CE63900EA25E0 /* ProfileView.swift */; };
+		4D658DFF252CF88F00EA25E0 /* SignedInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D658DFE252CF88F00EA25E0 /* SignedInView.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
-		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
@@ -31,12 +33,14 @@
 		04324022FC1AA778077DFDF3 /* Pods-GoogleSignInSwift_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoogleSignInSwift_Tests.release.xcconfig"; path = "Target Support Files/Pods-GoogleSignInSwift_Tests/Pods-GoogleSignInSwift_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		0CFBA44A2B3263492385F25A /* Pods-GoogleSignInSwift_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoogleSignInSwift_Tests.debug.xcconfig"; path = "Target Support Files/Pods-GoogleSignInSwift_Tests/Pods-GoogleSignInSwift_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		1472A8667715759BD6221B07 /* Pods-GoogleSignInSwift_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoogleSignInSwift_Example.release.xcconfig"; path = "Target Support Files/Pods-GoogleSignInSwift_Example/Pods-GoogleSignInSwift_Example.release.xcconfig"; sourceTree = "<group>"; };
-		516F0F29A4E6B0AC39679C49 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		4D658DD8252C4AB600EA25E0 /* TokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenView.swift; sourceTree = "<group>"; };
+		4D658DFA252CE63900EA25E0 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		4D658DFE252CF88F00EA25E0 /* SignedInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignedInView.swift; sourceTree = "<group>"; };
+		516F0F29A4E6B0AC39679C49 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* GoogleSignInSwift_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoogleSignInSwift_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		607FACD71AFB9204008FA782 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		607FACDA1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* GoogleSignInSwift_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoogleSignInSwift_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -44,9 +48,9 @@
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		72BF246D94EE555231E4396E /* Pods_GoogleSignInSwift_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GoogleSignInSwift_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8F733D4F99BA86EFFE31544 /* Pods-GoogleSignInSwift_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoogleSignInSwift_Example.debug.xcconfig"; path = "Target Support Files/Pods-GoogleSignInSwift_Example/Pods-GoogleSignInSwift_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		D4F9773AC81B830F92EB96E9 /* GoogleSignInSwift.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = GoogleSignInSwift.podspec; path = ../GoogleSignInSwift.podspec; sourceTree = "<group>"; };
+		D4F9773AC81B830F92EB96E9 /* GoogleSignInSwift.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = GoogleSignInSwift.podspec; path = ../GoogleSignInSwift.podspec; sourceTree = "<group>"; };
 		D5F43F3F121F0F8C96A5FBB2 /* Pods_GoogleSignInSwift_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GoogleSignInSwift_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		DAA460BCD0987FD3A5C2B6FA /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		DAA460BCD0987FD3A5C2B6FA /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,7 +81,6 @@
 				0CFBA44A2B3263492385F25A /* Pods-GoogleSignInSwift_Tests.debug.xcconfig */,
 				04324022FC1AA778077DFDF3 /* Pods-GoogleSignInSwift_Tests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -107,7 +110,9 @@
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
-				607FACD91AFB9204008FA782 /* Main.storyboard */,
+				4D658DFE252CF88F00EA25E0 /* SignedInView.swift */,
+				4D658DD8252C4AB600EA25E0 /* TokenView.swift */,
+				4D658DFA252CE63900EA25E0 /* ProfileView.swift */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
@@ -228,6 +233,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -247,7 +253,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
@@ -294,11 +299,17 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-GoogleSignInSwift_Example/Pods-GoogleSignInSwift_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleSignInSwift/GoogleSignInSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleSignInSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -356,8 +367,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D658DFF252CF88F00EA25E0 /* SignedInView.swift in Sources */,
+				4D658DFB252CE63900EA25E0 /* ProfileView.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				4D658DD9252C4AB600EA25E0 /* TokenView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,14 +394,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		607FACD91AFB9204008FA782 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				607FACDA1AFB9204008FA782 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		607FACDE1AFB9204008FA782 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (

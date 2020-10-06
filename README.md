@@ -1,6 +1,6 @@
 # GoogleSignInSwift
 
-[![CI Status](https://img.shields.io/travis/Josh Kowarsky/GoogleSignInSwift.svg?style=flat)](https://travis-ci.org/Josh Kowarsky/GoogleSignInSwift)
+[![CI Status](https://img.shields.io/travis/J0shK/GoogleSignInSwift.svg?style=flat)](https://travis-ci.org/J0shK/GoogleSignInSwift)
 [![Version](https://img.shields.io/cocoapods/v/GoogleSignInSwift.svg?style=flat)](https://cocoapods.org/pods/GoogleSignInSwift)
 [![License](https://img.shields.io/cocoapods/l/GoogleSignInSwift.svg?style=flat)](https://cocoapods.org/pods/GoogleSignInSwift)
 [![Platform](https://img.shields.io/cocoapods/p/GoogleSignInSwift.svg?style=flat)](https://cocoapods.org/pods/GoogleSignInSwift)
@@ -8,8 +8,6 @@
 ## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
-
-## Requirements
 
 ## Installation
 

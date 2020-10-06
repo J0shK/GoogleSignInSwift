@@ -1,7 +1,9 @@
 use_frameworks!
 
 target 'GoogleSignInSwift_Example' do
+  pod 'AlamofireImage'
   pod 'GoogleSignInSwift', :path => '../'
+  pod 'SnapKit'
 
   target 'GoogleSignInSwift_Tests' do
     inherit! :search_paths

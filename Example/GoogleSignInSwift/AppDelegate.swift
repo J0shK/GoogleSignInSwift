@@ -6,6 +6,7 @@
 //  Copyright (c) 2020 Josh Kowarsky. All rights reserved.
 //
 
+import GoogleSignInSwift
 import UIKit
 
 @UIApplicationMain
@@ -15,8 +16,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        GoogleSignIn.shared.clientId = "<Google API Client ID>"
+        GoogleSignIn.shared.scopes.append("<Google API Scope>")
+
+        window = UIWindow()
+        window?.rootViewController = ViewController()
+        window?.makeKeyAndVisible()
         return true
+    }
+
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        GoogleSignIn.shared.handleURL(url)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
