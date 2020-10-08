@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'GoogleSignInSwift'
-  s.version          = '0.1.0'
+  s.version          = '0.1.1'
   s.summary          = 'Google Sign In allows users to sign in with their Google account.'
   s.swift_versions   = '4.0'
 
@@ -21,11 +21,7 @@ Pod::Spec.new do |s|
   s.author           = { 'Josh Kowarsky' => 'josh.kowarsky@gmail.com' }
   s.source           = { :git => 'https://github.com/J0shK/GoogleSignInSwift.git', :tag => s.version.to_s }
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '9.0'
 
   s.source_files = 'GoogleSignInSwift/Classes/**/*'
-  
-  # s.resource_bundles = {
-  #   'GoogleSignInSwift' => ['GoogleSignInSwift/Assets/*.png']
-  # }
 end
