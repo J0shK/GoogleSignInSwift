@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'GoogleSignInSwift'
-  s.version          = '0.1.1'
+  s.version          = '0.1.2'
   s.summary          = 'Google Sign In allows users to sign in with their Google account.'
   s.swift_versions   = '4.0'
 
@@ -24,4 +24,5 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '9.0'
 
   s.source_files = 'GoogleSignInSwift/Classes/**/*'
+  s.pod_target_xcconfig = { 'APPLICATION_EXTENSION_API_ONLY' => 'No' }
 end

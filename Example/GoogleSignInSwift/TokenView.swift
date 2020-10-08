@@ -27,11 +27,7 @@ class TokenView: UIView {
 
     private func setupTokenLabel() {
         addSubview(tokenLabel)
-        if #available(iOS 13.0, *) {
-            tokenLabel.textColor = .label
-        } else {
-            tokenLabel.textColor = .black
-        }
+        tokenLabel.textColor = .black
         tokenLabel.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
             make.bottom.equalTo(snp.centerY).inset(4)
@@ -43,11 +39,7 @@ class TokenView: UIView {
         addSubview(refreshButton)
         refreshButton.addTarget(self, action: #selector(tappedRefreshButton), for: .touchUpInside)
         refreshButton.setTitle("Refresh Token", for: .normal)
-        if #available(iOS 13.0, *) {
-            refreshButton.setTitleColor(.link, for: .normal)
-        } else {
-            refreshButton.setTitleColor(.blue, for: .normal)
-        }
+        refreshButton.setTitleColor(.blue, for: .normal)
         refreshButton.snp.makeConstraints { make in
             make.top.equalTo(snp.centerY).offset(4)
             make.centerX.equalToSuperview()
@@ -69,16 +61,16 @@ class TokenView: UIView {
             }
             DispatchQueue.main.async {
                 self?.configure()
-                UIView.animate(withDuration: 0.4) { [weak self] in
+                UIView.animate(withDuration: 0.4, animations: { [weak self] in
                     self?.tokenLabel.alpha = 0
-                } completion: { [weak self] completed in
+                }, completion: { [weak self] completed in
                     guard completed else { return }
-                    UIView.animate(withDuration: 0.4) {
+                    UIView.animate(withDuration: 0.4, animations: {
                         self?.tokenLabel.alpha = 1
-                    } completion: { completed in
+                    }, completion: { completed in
                         self?.refreshing = false
-                    }
-                }
+                    })
+                })
             }
         }
     }

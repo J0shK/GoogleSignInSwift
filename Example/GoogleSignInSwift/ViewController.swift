@@ -26,11 +26,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if #available(iOS 13.0, *) {
-            view.backgroundColor = .systemBackground
-        } else {
-            view.backgroundColor = .white
-        }
+        view.backgroundColor = .white
         setupSignInButton()
         setupSignedInView()
         setupSignOutButton()
@@ -41,11 +37,7 @@ class ViewController: UIViewController {
         view.addSubview(signInButton)
         signInButton.addTarget(self, action: #selector(tappedSignInButton), for: .touchUpInside)
         signInButton.setTitle("Sign in", for: .normal)
-        if #available(iOS 13.0, *) {
-            signInButton.setTitleColor(.link, for: .normal)
-        } else {
-            signInButton.setTitleColor(.blue, for: .normal)
-        }
+        signInButton.setTitleColor(.blue, for: .normal)
         signInButton.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
@@ -63,11 +55,7 @@ class ViewController: UIViewController {
         view.addSubview(signOutButton)
         signOutButton.addTarget(self, action: #selector(tappedSignOutButton), for: .touchUpInside)
         signOutButton.setTitle("Sign out", for: .normal)
-        if #available(iOS 13.0, *) {
-            signOutButton.setTitleColor(.link, for: .normal)
-        } else {
-            signOutButton.setTitleColor(.blue, for: .normal)
-        }
+        signOutButton.setTitleColor(.blue, for: .normal)
         signOutButton.snp.makeConstraints { make in
             make.top.equalTo(signedInView.snp.bottom).offset(9)
             make.centerX.equalToSuperview()

@@ -16,7 +16,7 @@ class MockAPI: GoogleSignInAPI {
     }
 
     func performedRequest(_ request: GoogleSignInRequest) -> Bool {
-        requests.contains { performedRequest -> Bool in
+        return requests.contains { performedRequest -> Bool in
             guard let performedURLRequest = try? performedRequest.asURLRequest(), let urlRequest = try? request.asURLRequest() else { return false }
             return performedURLRequest == urlRequest
         }

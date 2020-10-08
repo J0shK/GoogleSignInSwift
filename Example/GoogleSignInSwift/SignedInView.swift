@@ -29,11 +29,7 @@ class SignedInView: UIView {
     private func setupLabel() {
         addSubview(label)
         label.text = "Signed in!"
-        if #available(iOS 13.0, *) {
-            label.textColor = .label
-        } else {
-            label.textColor = .black
-        }
+        label.textColor = .black
         label.font = .preferredFont(forTextStyle: .title1)
         label.snp.makeConstraints { make in
             make.top.equalToSuperview()

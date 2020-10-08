@@ -145,6 +145,7 @@ public class GoogleSignIn {
         - url: URL to handle
     - Returns: `true` if handled.
      */
+    @discardableResult
     public func handleURL(_ url: URL) -> Bool {
         guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true), components.scheme == redirectURI else {
             return false

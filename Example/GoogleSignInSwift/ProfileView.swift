@@ -27,11 +27,7 @@ class ProfileView: UIView {
 
     private func setupNameLabel() {
         addSubview(nameLabel)
-        if #available(iOS 13.0, *) {
-            nameLabel.textColor = .label
-        } else {
-            nameLabel.textColor = .black
-        }
+        nameLabel.textColor = .black
         nameLabel.font = .preferredFont(forTextStyle: .title2)
         nameLabel.textAlignment = .center
         nameLabel.snp.makeConstraints { make in
