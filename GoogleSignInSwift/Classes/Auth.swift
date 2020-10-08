@@ -7,15 +7,24 @@
 
 public extension GoogleSignIn {
     struct Auth: Codable {
-        public enum AuthType: String, Codable {
+        public enum TokenType: String, Codable {
             case Bearer
         }
         public let accessToken: String
         public let expiresAt: Date
         public let refreshToken: String?
         public let scope: String
-        public let tokenType: AuthType
+        public let tokenType: TokenType
         public let idToken: String
+
+        public init(accessToken: String, expiresAt: Date, refreshToken: String?, scope: String, tokenType: TokenType, idToken: String) {
+            self.accessToken = accessToken
+            self.expiresAt = expiresAt
+            self.refreshToken = refreshToken
+            self.scope = scope
+            self.tokenType = tokenType
+            self.idToken = idToken
+        }
 
         enum CodingKeys: String, CodingKey {
             case accessToken = "access_token"

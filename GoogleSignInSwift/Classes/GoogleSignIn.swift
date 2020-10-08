@@ -53,9 +53,14 @@ public class GoogleSignIn {
         return auth != nil
     }
 
-    private let api = API()
+    var api: GoogleSignInAPI
+    private var urlOpener: GoogleSignInURLOpener
 
-    public init(storage: GoogleSignInStorage = DefaultStorage()) {
+    public init(api: GoogleSignInAPI = API(),
+                storage: GoogleSignInStorage = DefaultStorage(),
+                urlOpener: GoogleSignInURLOpener = URLOpener()) {
+        self.api = api
+        self.urlOpener = urlOpener
         self.storage = storage
         auth = storage.get()
         user = storage.get()
@@ -82,8 +87,8 @@ public class GoogleSignIn {
             return
         }
         do {
-            let url = try Request.auth.asURL()
-            openURL(url)
+            let url = try Request.auth(clientId: clientId, scopes: scopes, redirectURI: redirectURI).asURL()
+            urlOpener.open(url: url)
         } catch {
             delegate?.googleSignIn(signInDidError: error)
         }
@@ -104,7 +109,7 @@ public class GoogleSignIn {
             completion?(nil, Error.noRefreshToken)
             return
         }
-        api.request(Request.refreshToken) { [weak self] result in
+        api.request(Request.refreshToken(clientId: clientId, refreshToken: auth.refreshToken ?? "")) { [weak self] result in
             switch result {
             case .error(let error):
                 completion?(nil, error)
@@ -142,43 +147,12 @@ public class GoogleSignIn {
         }
     }
 
-    private func openURL(_ url: URL) {
-        if #available(iOS 10.0, *) {
-            UIApplication
-                .shared
-                .open(url, options: [:])
-        } else {
-            UIApplication.shared.openURL(url)
-        }
-    }
-
-    public func getProfile(completion: @escaping ProfileBlock) {
-        guard auth?.accessToken != nil else {
-            completion(nil, Error.noAccessToken)
-            return
-        }
-        api.request(Request.getProfile) { [weak self] result in
-            switch result {
-            case .error(let error):
-                completion(nil, error)
-            case .success(let data):
-                guard let user = try? JSONDecoder().decode(User.self, from: data) else {
-                    completion(nil, Error.jsonDecodeError)
-                    return
-                }
-                self?.user = user
-                self?.storage.set(user: user)
-                completion(user, nil)
-            }
-        }
-    }
-
     private func authenticate(with code: String) {
         guard !clientId.isEmpty else {
             delegate?.googleSignIn(signInDidError: Error.noClientId)
             return
         }
-        api.request(Request.token(code: code)) { [weak self] completion in
+        api.request(Request.token(code: code, clientId: clientId, redirectURI: redirectURI)) { [weak self] completion in
             switch completion {
             case .error(let error):
                 self?.delegate?.googleSignIn(signInDidError: error)
@@ -202,6 +176,27 @@ public class GoogleSignIn {
                     }
                     self?.delegate?.googleSignIn(didSignIn: auth, user: user)
                 }
+            }
+        }
+    }
+    
+    public func getProfile(completion: @escaping ProfileBlock) {
+        guard auth?.accessToken != nil else {
+            completion(nil, Error.noAccessToken)
+            return
+        }
+        api.request(Request.getProfile(accessToken: auth?.accessToken ?? "")) { [weak self] result in
+            switch result {
+            case .error(let error):
+                completion(nil, error)
+            case .success(let data):
+                guard let user = try? JSONDecoder().decode(User.self, from: data) else {
+                    completion(nil, Error.jsonDecodeError)
+                    return
+                }
+                self?.user = user
+                self?.storage.set(user: user)
+                completion(user, nil)
             }
         }
     }

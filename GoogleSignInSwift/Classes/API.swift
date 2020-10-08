@@ -5,46 +5,49 @@
 //  Created by Josh Kowarsky on 10/5/20.
 //
 
-import Foundation
+public protocol GoogleSignInAPI {
+    func request(_ request: GoogleSignInRequest, completion: @escaping CompletionBlock)
+}
 
-struct API {
-    enum Error: Swift.Error {
-        case networkError
-        case noData
-        case httpError(code: Int)
-    }
+public extension GoogleSignInAPI {
+    typealias CompletionBlock = (GoogleSignIn.Result) -> Void
+}
 
-    typealias CompletionBlock = (Result) -> Void
-
+public extension GoogleSignIn {
     enum Result {
         case success(data: Data)
-        case error(error: Error)
+        case error(error: Swift.Error)
     }
 
-    func request(_ request: Request, completionBlock: @escaping CompletionBlock) {
-        guard let urlRequest = try? request.asURLRequest() else { return }
-        let task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
-
-            if error != nil {
-                completionBlock(.error(error: .networkError))
-                return
-            }
-
-            guard let data = data else {
-                completionBlock(.error(error: .noData))
-                return
-            }
-
-            if let response = response as? HTTPURLResponse {
-                guard (200 ... 299) ~= response.statusCode else {
-                    completionBlock(.error(error: .httpError(code: response.statusCode)))
-                    return
-                }
-            }
-
-            completionBlock(.success(data: data))
+    struct API: GoogleSignInAPI {
+        enum Error: Swift.Error {
+            case networkError
+            case noData
+            case httpError(code: Int)
         }
 
-        task.resume()
+        public init() {}
+
+        public func request(_ request: GoogleSignInRequest, completion: @escaping CompletionBlock) {
+            guard let urlRequest = try? request.asURLRequest() else { return }
+            let task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+                if error != nil {
+                    completion(.error(error: Error.networkError))
+                    return
+                }
+                guard let data = data else {
+                    completion(.error(error: Error.noData))
+                    return
+                }
+                if let response = response as? HTTPURLResponse {
+                    guard (200 ... 299) ~= response.statusCode else {
+                        completion(.error(error: Error.httpError(code: response.statusCode)))
+                        return
+                    }
+                }
+                completion(.success(data: data))
+            }
+            task.resume()
+        }
     }
 }

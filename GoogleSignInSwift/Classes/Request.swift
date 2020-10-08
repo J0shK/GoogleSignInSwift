@@ -5,117 +5,131 @@
 //  Created by Josh Kowarsky on 10/5/20.
 //
 
-enum HTTPMethod: String {
-    case get
-    case post
+public protocol GoogleSignInRequest {
+    var baseURLString: String { get }
+    var method: GoogleSignIn.HTTPMethod { get }
+    var path: String { get }
+    var parameters: GoogleSignIn.Parameters { get }
+    var headers: GoogleSignIn.HTTPHeaders { get }
+    func asURL() throws -> URL
+    func asURLRequest() throws -> URLRequest
 }
 
-typealias Parameters = [String: Any]
-typealias HTTPHeaders = [String: String]
-
-enum Request {
-    enum Error: Swift.Error {
-        case createURLError
+public extension GoogleSignIn {
+    enum HTTPMethod: String {
+        case get
+        case post
     }
-    
-    var baseURLString: String {
-        switch self {
-        case .auth:
-            return "https://accounts.google.com/o/oauth2/v2"
-        case .token, .refreshToken:
-            return "https://oauth2.googleapis.com"
-        case .getProfile:
-            return "https://www.googleapis.com/oauth2/v2"
+
+    typealias Parameters = [String: Any]
+    typealias HTTPHeaders = [String: String]
+}
+
+extension GoogleSignIn {
+    enum Request: GoogleSignInRequest {
+        enum Error: Swift.Error {
+            case createURLError
         }
-    }
 
-    case auth
-    case token(code: String)
-    case refreshToken
-    case getProfile
-
-    var method: HTTPMethod {
-        switch self {
-        case .auth, .getProfile:
-            return .get
-        case .token, .refreshToken:
-            return .post
+        var baseURLString: String {
+            switch self {
+            case .auth:
+                return "https://accounts.google.com/o/oauth2/v2"
+            case .token, .refreshToken:
+                return "https://oauth2.googleapis.com"
+            case .getProfile:
+                return "https://www.googleapis.com/oauth2/v2"
+            }
         }
-    }
 
-    var path: String {
-        switch self {
-        case .auth:
-            return "auth"
-        case .token, .refreshToken:
-            return "token"
-        case .getProfile:
-            return "userinfo"
+        case auth(clientId: String, scopes: [String], redirectURI: String)
+        case token(code: String, clientId: String, redirectURI: String)
+        case refreshToken(clientId: String, refreshToken: String)
+        case getProfile(accessToken: String)
+
+        var method: HTTPMethod {
+            switch self {
+            case .auth, .getProfile:
+                return .get
+            case .token, .refreshToken:
+                return .post
+            }
         }
-    }
 
-    var parameters: Parameters {
-        switch self {
-        case .auth:
+        var path: String {
+            switch self {
+            case .auth:
+                return "auth"
+            case .token, .refreshToken:
+                return "token"
+            case .getProfile:
+                return "userinfo"
+            }
+        }
+
+        var parameters: Parameters {
+            switch self {
+            case .auth(let clientId, let scopes, let redirectURI):
+                return [
+                    "client_id": clientId,
+                    "scope": scopes.joined(separator: " "),
+                    "response_type": "code",
+                    "redirect_uri": "\(redirectURI):code"
+                ]
+            case .token(let code, let clientId, let redirectURI):
+                return [
+                    "code": code,
+                    "client_id": clientId,
+                    "grant_type": "authorization_code",
+                    "redirect_uri": "\(redirectURI):code"
+                ]
+            case .refreshToken(let clientId, let refreshToken):
+                return [
+                    "client_id": clientId,
+                    "refresh_token": refreshToken,
+                    "grant_type": "refresh_token"
+                ]
+            case .getProfile(let accessToken):
+                return [
+                    "access_token": accessToken,
+                    "alt": "json"
+                ]
+            }
+        }
+
+        var headers: HTTPHeaders {
             return [
-                "client_id": GoogleSignIn.shared.clientId,
-                "scope": GoogleSignIn.shared.scopes.joined(separator: " "),
-                "response_type": "code",
-                "redirect_uri": "\(GoogleSignIn.shared.redirectURI):code"
-            ]
-        case .token(let code):
-            return [
-                "code": code,
-                "client_id": GoogleSignIn.shared.clientId,
-                "grant_type": "authorization_code",
-                "redirect_uri": "\(GoogleSignIn.shared.redirectURI):code"
-            ]
-        case .refreshToken:
-            return [
-                "client_id": GoogleSignIn.shared.clientId,
-                "refresh_token": GoogleSignIn.shared.auth?.refreshToken ?? "",
-                "grant_type": "refresh_token"
-            ]
-        case .getProfile:
-            return [
-                "access_token": GoogleSignIn.shared.auth?.accessToken ?? "",
-                "alt": "json"
+                "Content-Type": "application/x-www-form-urlencoded"
             ]
         }
-    }
 
-    var headers: HTTPHeaders {
-        return [
-            "Content-Type": "application/x-www-form-urlencoded"
-        ]
-    }
+        func asURL() throws -> URL {
+            guard var components = URLComponents(string: baseURLString) else {
+                throw Error.createURLError
+            }
+            components.path = "\(components.path)/\(path)"
+            if method == .get {
+                components.queryItems = parameters.map { URLQueryItem(name: $0.key, value: $0.value as? String) }
+            }
+            guard let url = components.url else {
+                throw Error.createURLError
+            }
 
-    func asURL() throws -> URL {
-        guard var components = URLComponents(string: baseURLString) else {
-            throw Error.createURLError
-        }
-        components.path = "\(components.path)/\(path)"
-        if method == .get {
-            components.queryItems = parameters.map { URLQueryItem(name: $0.key, value: $0.value as? String) }
-        }
-        guard let url = components.url else {
-            throw Error.createURLError
+            return url
         }
 
-        return url
-    }
-
-    func asURLRequest() throws -> URLRequest {
-        let url = try asURL()
-        var request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 30.0)
-        for header in headers {
-            request.addValue(header.value, forHTTPHeaderField: header.key)
+        func asURLRequest() throws -> URLRequest {
+            let url = try asURL()
+            var request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 30.0)
+            for header in headers {
+                request.addValue(header.value, forHTTPHeaderField: header.key)
+            }
+            if method == .post {
+                request.httpBody = parameters.percentEncoded()
+            }
+            request.httpMethod = method.rawValue.uppercased()
+            return request
         }
-        if method == .post {
-            request.httpBody = parameters.percentEncoded()
-        }
-        request.httpMethod = method.rawValue.uppercased()
-        return request
     }
 }
 
