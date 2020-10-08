@@ -10,6 +10,7 @@ Pod::Spec.new do |s|
   s.name             = 'GoogleSignInSwift'
   s.version          = '0.1.0'
   s.summary          = 'Google Sign In allows users to sign in with their Google account.'
+  s.swift_versions   = '4.0'
 
   s.description      = <<-DESC
   Google Sign In allows users to sign in with their Google account. A more up-to-date Google Sign In written completely in Swift!
@@ -18,7 +19,7 @@ Pod::Spec.new do |s|
   s.homepage         = 'https://github.com/J0shK/GoogleSignInSwift'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Josh Kowarsky' => 'josh.kowarsky@gmail.com' }
-  s.source           = { :git => 'https://github.com/J0shK/GoogleSignInSwift.git', :tag => s.version.to_s }'
+  s.source           = { :git => 'https://github.com/J0shK/GoogleSignInSwift.git', :tag => s.version.to_s }
 
   s.ios.deployment_target = '8.0'
 
