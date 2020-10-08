@@ -5,29 +5,54 @@
 //  Created by Josh Kowarsky on 10/5/20.
 //
 
-import Foundation
-
+/// Delegate to receive authentication, user and/or error generated during sign in process.
 public protocol GoogleSignInDelegate: AnyObject {
+    /**
+     Called when sign in process completes.
+
+     - Parameters:
+         - auth: Auth object on success
+         - user: User object on success if requested
+         - error: Error on failure
+     */
     func googleSignIn(didSignIn auth: GoogleSignIn.Auth?, user: GoogleSignIn.User?, error: Error?)
 }
 
+/**
+ GoogleSignIn is a helper class for logging a user in and obtaining their Google auth credentials and/or their Google user info
+ */
 public class GoogleSignIn {
+    /// Google Sign In Error
     public enum Error: Swift.Error {
+        /// No client ID provided
         case noClientId
+        /// No scope provided
         case noScope
+        /// No refresh token
         case noRefreshToken
+        /// No access token
         case noAccessToken
+        /// Not signed in
         case notSignedIn
+        /// Error decoding JSON
         case jsonDecodeError
+        /// No user
         case noUser
     }
+    /// Completion block used when refreshing auth.
     public typealias RefreshBlock = (Auth?, Swift.Error?) -> Void
+    /// Completion block used for `refreshingAccessToken`.
     public typealias RefreshingTokenBlock = (String?, Swift.Error?) -> Void
+    /// Completion block used for fetching profile.
     public typealias ProfileBlock = (User?, Swift.Error?) -> Void
 
+    /// Shared instance of `GoogleSignIn`
     public static let shared = GoogleSignIn()
 
+    /// Delegate for recieving sign in completion notification.
     public weak var delegate: GoogleSignInDelegate?
+
+    /// Storage object for storing auth credentials and/or user. Replace with your own Storage conforming to `GoogleSignInStorage`.
     public var storage: GoogleSignInStorage {
         didSet {
             auth = storage.get()
@@ -35,7 +60,9 @@ public class GoogleSignIn {
         }
     }
 
+    /// Google app client ID
     public var clientId: String = ""
+    /// Google API scopes
     public var scopes: [String] {
         var set = Set(privateScopes)
         if profile {
@@ -47,15 +74,21 @@ public class GoogleSignIn {
         return Array(set)
     }
     private var privateScopes = Set<String>()
+    /// Should fetch users profile. Default is `true`.
     public var profile = true
+    /// Should fetch users email. Default is `false`.
     public var email = false
 
+    /// Signed in users `Auth` object.
     public var auth: Auth?
+    /// Signed in users `User` object.
     public var user: User?
 
+    /// Redirect URI generated from `clientId`.
     public var redirectURI: String {
         return clientId.components(separatedBy: ".").reversed().joined(separator: ".")
     }
+    /// Is user signed in.
     public var isSignedIn: Bool {
         return auth != nil
     }
@@ -63,6 +96,14 @@ public class GoogleSignIn {
     private var api: GoogleSignInAPI
     private var urlOpener: GoogleSignInURLOpener
 
+    /**
+     Manual instantiation is generally used for testing.
+
+     - Parameters:
+        - api: API conforming to `GoogleSignInAPI`.
+        - storage: Storage conforming to `GoogleSignInStorage`.
+        - urlOpener: URL opener conforming to `GoogleSignInURLOpener`.
+     */
     public init(api: GoogleSignInAPI = API(),
                 storage: GoogleSignInStorage = DefaultStorage(),
                 urlOpener: GoogleSignInURLOpener = URLOpener()) {
@@ -73,26 +114,37 @@ public class GoogleSignIn {
         user = storage.get()
     }
 
+    /// Add Google API scope.
     public func addScope(_ scope: String) {
         privateScopes.insert(scope)
     }
 
+    /// Add multiple Google API scopes.
     public func addScopes(_ scopes: [String]) {
         for scope in scopes {
             addScope(scope)
         }
     }
 
+    /// Remove Google API scope.
     public func removeScope(_ scope: String) {
         privateScopes.remove(scope)
     }
 
+    /// Remove multiple Google API scopes.
     public func removeScopes(_ scopes: [String]) {
         for scope in scopes {
             removeScope(scope)
         }
     }
 
+    /**
+     Handle incoming URLs.
+
+     - Parameters:
+        - url: URL to handle
+    - Returns: `true` if handled.
+     */
     public func handleURL(_ url: URL) -> Bool {
         guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true), components.scheme == redirectURI else {
             return false
@@ -104,6 +156,7 @@ public class GoogleSignIn {
         return true
     }
 
+    /// Begin process of signing into Google.
     public func signIn() {
         guard !clientId.isEmpty else {
             delegate?.googleSignIn(didSignIn: nil, user: nil, error: Error.noClientId)
@@ -121,12 +174,23 @@ public class GoogleSignIn {
         }
     }
 
+    /**
+     Sign out.
+     Clears users information and authentication credentials.
+
+     - Returns: `true` if successfully signed out.
+     */
     @discardableResult
     public func signOut() -> Bool {
         auth = nil
         return storage.clear()
     }
 
+    /**
+     Refresh users credentials.
+     - Parameters:
+        - completion: Completion block containing `Auth` oject or an error.
+     */
     public func refreshToken(completion: RefreshBlock? = nil) {
         guard !clientId.isEmpty else {
             completion?(nil, Error.noClientId)
@@ -159,6 +223,11 @@ public class GoogleSignIn {
         }
     }
 
+    /**
+     Best way to use access token. Refreshing it if necessary.
+     - Parameters:
+        - completion: Completion block containing fresh access token or error.
+     */
     public func refreshingAccessToken(completion: @escaping RefreshingTokenBlock) {
         guard let auth = auth else {
             completion(nil, Error.notSignedIn)
@@ -206,7 +275,12 @@ public class GoogleSignIn {
             }
         }
     }
-    
+
+    /**
+     Fetch the current signed in users profile information.
+     - Parameters:
+        - completion: Completion block containing `User` object or error.
+     */
     public func getProfile(completion: @escaping ProfileBlock) {
         guard let accessToken = auth?.accessToken else {
             completion(nil, Error.noAccessToken)
