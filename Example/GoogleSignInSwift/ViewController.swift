@@ -92,13 +92,13 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: GoogleSignInDelegate {
-    func googleSignIn(didSignIn auth: GoogleSignIn.Auth, user: GoogleSignIn.User) {
+    func googleSignIn(didSignIn auth: GoogleSignIn.Auth?, user: GoogleSignIn.User?, error: Error?) {
+        if let error = error {
+            print("Sign in error: \(error)")
+            return
+        }
         DispatchQueue.main.async { [weak self] in
             self?.configure()
         }
-    }
-
-    func googleSignIn(signInDidError error: Error) {
-        print("Error signing in: \(error)")
     }
 }

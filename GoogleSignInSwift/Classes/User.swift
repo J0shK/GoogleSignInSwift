@@ -8,13 +8,13 @@
 public extension GoogleSignIn {
     struct User: Codable {
         public let id: String
-        public let email: String
-        public let verifiedEmail: Bool
-        public let name: String
-        public let givenName: String
-        public let familyName: String
-        public let picture: URL
-        public let locale: String
+        public let email: String?
+        public let verifiedEmail: Bool?
+        public let name: String?
+        public let givenName: String?
+        public let familyName: String?
+        public let picture: URL?
+        public let locale: String?
 
         enum CodingKeys: String, CodingKey {
             case id

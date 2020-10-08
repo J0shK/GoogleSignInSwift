@@ -8,12 +8,7 @@
 import Foundation
 
 public protocol GoogleSignInDelegate: AnyObject {
-    func googleSignIn(didSignIn auth: GoogleSignIn.Auth, user: GoogleSignIn.User)
-    func googleSignIn(signInDidError error: Error)
-}
-
-public extension GoogleSignInDelegate {
-    func googleSignIn(signInDidError error: Error) {}
+    func googleSignIn(didSignIn auth: GoogleSignIn.Auth?, user: GoogleSignIn.User?, error: Error?)
 }
 
 public class GoogleSignIn {
@@ -41,7 +36,19 @@ public class GoogleSignIn {
     }
 
     public var clientId: String = ""
-    public var scopes = ["profile", "email"]
+    public var scopes: [String] {
+        var set = Set(privateScopes)
+        if profile {
+            set.insert("profile")
+        }
+        if email {
+            set.insert("email")
+        }
+        return Array(set)
+    }
+    private var privateScopes = Set<String>()
+    public var profile = true
+    public var email = false
 
     public var auth: Auth?
     public var user: User?
@@ -53,7 +60,7 @@ public class GoogleSignIn {
         return auth != nil
     }
 
-    var api: GoogleSignInAPI
+    private var api: GoogleSignInAPI
     private var urlOpener: GoogleSignInURLOpener
 
     public init(api: GoogleSignInAPI = API(),
@@ -64,6 +71,26 @@ public class GoogleSignIn {
         self.storage = storage
         auth = storage.get()
         user = storage.get()
+    }
+
+    public func addScope(_ scope: String) {
+        privateScopes.insert(scope)
+    }
+
+    public func addScopes(_ scopes: [String]) {
+        for scope in scopes {
+            addScope(scope)
+        }
+    }
+
+    public func removeScope(_ scope: String) {
+        privateScopes.remove(scope)
+    }
+
+    public func removeScopes(_ scopes: [String]) {
+        for scope in scopes {
+            removeScope(scope)
+        }
     }
 
     public func handleURL(_ url: URL) -> Bool {
@@ -79,18 +106,18 @@ public class GoogleSignIn {
 
     public func signIn() {
         guard !clientId.isEmpty else {
-            delegate?.googleSignIn(signInDidError: Error.noClientId)
+            delegate?.googleSignIn(didSignIn: nil, user: nil, error: Error.noClientId)
             return
         }
         guard !scopes.isEmpty else {
-            delegate?.googleSignIn(signInDidError: Error.noScope)
+            delegate?.googleSignIn(didSignIn: nil, user: nil, error: Error.noScope)
             return
         }
         do {
             let url = try Request.auth(clientId: clientId, scopes: scopes, redirectURI: redirectURI).asURL()
             urlOpener.open(url: url)
         } catch {
-            delegate?.googleSignIn(signInDidError: error)
+            delegate?.googleSignIn(didSignIn: nil, user: nil, error: error)
         }
     }
 
@@ -149,43 +176,47 @@ public class GoogleSignIn {
 
     private func authenticate(with code: String) {
         guard !clientId.isEmpty else {
-            delegate?.googleSignIn(signInDidError: Error.noClientId)
+            delegate?.googleSignIn(didSignIn: nil, user: nil, error: Error.noClientId)
             return
         }
         api.request(Request.token(code: code, clientId: clientId, redirectURI: redirectURI)) { [weak self] completion in
             switch completion {
             case .error(let error):
-                self?.delegate?.googleSignIn(signInDidError: error)
+                self?.delegate?.googleSignIn(didSignIn: nil, user: nil, error: error)
             case .success(let data):
                 let decoder = JSONDecoder()
                 decoder.dateDecodingStrategy = .custom(Auth.dateDecodingStrategy)
                 guard let auth = try? decoder.decode(Auth.self, from: data) else {
-                    self?.delegate?.googleSignIn(signInDidError: Error.jsonDecodeError)
+                    self?.delegate?.googleSignIn(didSignIn: nil, user: nil, error: Error.jsonDecodeError)
                     return
                 }
                 self?.auth = auth
                 self?.storage.set(auth: auth)
                 self?.getProfile { user, error in
                     if let error = error {
-                        self?.delegate?.googleSignIn(signInDidError: error)
+                        self?.delegate?.googleSignIn(didSignIn: auth, user: nil, error: error)
                         return
                     }
                     guard let user = user else {
-                        self?.delegate?.googleSignIn(signInDidError: Error.noUser)
+                        self?.delegate?.googleSignIn(didSignIn: auth, user: nil, error: Error.noUser)
                         return
                     }
-                    self?.delegate?.googleSignIn(didSignIn: auth, user: user)
+                    self?.delegate?.googleSignIn(didSignIn: auth, user: user, error: nil)
                 }
             }
         }
     }
     
     public func getProfile(completion: @escaping ProfileBlock) {
-        guard auth?.accessToken != nil else {
+        guard let accessToken = auth?.accessToken else {
             completion(nil, Error.noAccessToken)
             return
         }
-        api.request(Request.getProfile(accessToken: auth?.accessToken ?? "")) { [weak self] result in
+        guard profile || email else {
+            completion(nil, Error.noScope)
+            return
+        }
+        api.request(Request.getProfile(accessToken: accessToken)) { [weak self] result in
             switch result {
             case .error(let error):
                 completion(nil, error)

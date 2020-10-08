@@ -11,7 +11,7 @@ class TableOfContentsSpec: QuickSpec {
         let mockURLOpener = MockURLOpener()
         let mockGoogleSignIn = GoogleSignIn(api: mockApi, storage: mockStorage, urlOpener: mockURLOpener)
         mockGoogleSignIn.clientId = "this-is-a-client-id"
-        mockGoogleSignIn.scopes.append("this-is-a-scope")
+        mockGoogleSignIn.addScope("this-is-a-scope")
 
         context("Sign in") {
             describe("process") {
@@ -39,11 +39,14 @@ class TableOfContentsSpec: QuickSpec {
                         }
                     }
                     expect(clientId).to(equal(mockGoogleSignIn.clientId))
-                    expect(scopes).to(equal(mockGoogleSignIn.scopes.joined(separator: " ")))
+                    let scopeComponents = scopes?.components(separatedBy: " ")
+                    expect(scopeComponents).to(contain("profile"))
+                    expect(scopeComponents).to(contain("this-is-a-scope"))
                 }
 
                 it("handles incoming URL") {
-                    let handled = mockGoogleSignIn.handleURL(URL(string: "\(mockGoogleSignIn.redirectURI)://?code=\(code)")!)
+                    let returnURL = URL(string: "\(mockGoogleSignIn.redirectURI)://?code=\(code)")!
+                    let handled = mockGoogleSignIn.handleURL(returnURL)
                     expect(handled).to(beTrue())
                 }
 
