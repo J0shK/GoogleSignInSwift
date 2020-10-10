@@ -7,7 +7,7 @@ PODS:
   - FBSnapshotTestCase/Core (2.1.4)
   - FBSnapshotTestCase/SwiftSupport (2.1.4):
     - FBSnapshotTestCase/Core
-  - GoogleSignInSwift (0.1.0)
+  - GoogleSignInSwift (0.2.0)
   - Nimble (7.3.4)
   - Nimble-Snapshots (6.3.0):
     - Nimble-Snapshots/Core (= 6.3.0)
@@ -44,12 +44,12 @@ SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   AlamofireImage: be9963c6582d68b39e89191f64c82a7d7bf40fdd
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
-  GoogleSignInSwift: da3335bbb5230c8ec563b359b826768f7592b7b7
+  GoogleSignInSwift: 5ae1295933dc02692a9c32ac7d28a9d8254feed8
   Nimble: 051e3d8912d40138fa5591c78594f95fb172af37
   Nimble-Snapshots: f5459b5b091678dc942d03ec4741cacb58ba4a52
   Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
 
-PODFILE CHECKSUM: 05b80c0e3b8b3d75b5fddf3aa67aed9a957044a3
+PODFILE CHECKSUM: 72b02db735f326d2689dcf8ff0a82e0ee565b33a
 
 COCOAPODS: 1.9.3

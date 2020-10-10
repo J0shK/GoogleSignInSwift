@@ -14,12 +14,6 @@ class TableOfContentsSpec: QuickSpec {
 
         context("Sign in") {
             describe("process") {
-                beforeEach {
-                    mockGoogleSignIn.signIn()
-                }
-
-                let code = "1234"
-
                 it("opens the correct URL") {
                     let signInURL = try! mockGoogleSignIn.signInURL()
                     let components = URLComponents(url: signInURL, resolvingAgainstBaseURL: true)
@@ -42,33 +36,6 @@ class TableOfContentsSpec: QuickSpec {
                     let scopeComponents = scopes?.components(separatedBy: " ")
                     expect(scopeComponents).to(contain("profile"))
                     expect(scopeComponents).to(contain("this-is-a-scope"))
-                }
-
-                it("handles incoming URL") {
-                    let returnURL = URL(string: "\(mockGoogleSignIn.redirectURI)://?code=\(code)")!
-                    let handled = mockGoogleSignIn.handleURL(returnURL)
-                    expect(handled).to(beTrue())
-                }
-
-                it("authorizes") {
-                    _ = mockGoogleSignIn.handleURL(URL(string: "\(mockGoogleSignIn.redirectURI)://?code=\(code)")!)
-                    let request = try! mockApi.requests.last!.asURLRequest()
-                    expect(request.url?.absoluteString).toEventually(equal("https://oauth2.googleapis.com/token"))
-                    let bodyString = String(data: request.httpBody!, encoding: .utf8)!
-                    let bodyComponents = bodyString.components(separatedBy: "&")
-                    var codeCheck: String?
-                    var clientId: String?
-                    for component in bodyComponents {
-                        let item = component.components(separatedBy: "=")
-                        if item.first == "code" {
-                            codeCheck = item.last
-                        }
-                        if item.first == "client_id" {
-                            clientId = item.last
-                        }
-                    }
-                    expect(codeCheck).to(equal(code))
-                    expect(clientId).to(equal(mockGoogleSignIn.clientId))
                 }
             }
         }

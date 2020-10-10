@@ -70,6 +70,7 @@ class ViewController: UIViewController {
     }
 
     @objc private func tappedSignInButton() {
+        GoogleSignIn.shared.presentingWindow = view.window
         GoogleSignIn.shared.signIn()
     }
 
@@ -80,17 +81,6 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: GoogleSignInDelegate {
-    
-    func googleSignIn(shouldOpen url: URL) {
-        if #available(iOS 10.0, *) {
-            UIApplication
-                .shared
-                .open(url, options: [:])
-        } else {
-            UIApplication.shared.openURL(url)
-        }
-    }
-
     func googleSignIn(didSignIn auth: GoogleSignIn.Auth?, user: GoogleSignIn.User?, error: Error?) {
         if let error = error {
             print("Sign in error: \(error)")
