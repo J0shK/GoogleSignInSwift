@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/cocoapods/l/GoogleSignInSwift.svg?style=flat)](https://cocoapods.org/pods/GoogleSignInSwift)
 [![Platform](https://img.shields.io/cocoapods/p/GoogleSignInSwift.svg?style=flat)](https://cocoapods.org/pods/GoogleSignInSwift)
 
-`GoogleSignInSwift` is used to obtain a users Google authentication credentials and/or their profile information. `GoogleSignInSwift` is written 100% in Swift and requires **ZERO** dependencies. It uses fast-app-switching with `Safari` to securely and conveniently sign the user in.
+`GoogleSignInSwift` uses OAuth 2.0 to to obtain a users Google authentication credentials and/or their profile information. `GoogleSignInSwift` is written 100% in Swift and requires **ZERO** dependencies. It uses fast-app-switching with `Safari` to securely and conveniently sign the user in. You can find more information about Google OAuth 2.0 sign in protocol [here](https://developers.google.com/identity/protocols/oauth2)
 
 ## Installation
 
@@ -18,7 +18,7 @@ pod 'GoogleSignInSwift'
 # Usage
 
 ### Setup
-Supply `GoogleSignIn` with your Google API `Client ID` and any Google API scope
+Provide `GoogleSignIn` with your apps [Google API Client ID](https://console.developers.google.com/apis/credentials) and any [Google API scope](https://developers.google.com/identity/protocols/oauth2/scopes)
 ```swift
 GoogleSignIn.shared.clientId = "<Google API Client ID>"
 GoogleSignIn.shared.addScope("<Google API Scope>")
@@ -28,7 +28,19 @@ GoogleSignIn.shared.addScope("<Google API Scope>")
 GoogleSignIn.shared.delegate = self
 GoogleSignIn.shared.signIn()
 ```
-Listen for completion by implementing
+for the process to continue, you must implement `googleSignIn(shouldOpen url:)` and launch provided `URL`.
+```swift
+func googleSignIn(shouldOpen url: URL) {
+    if #available(iOS 10.0, *) {
+        UIApplication
+            .shared
+            .open(url, options: [:])
+    } else {
+        UIApplication.shared.openURL(url)
+    }
+}
+```
+listen for completion by implementing
 ```swift
 func googleSignIn(didSignIn auth: GoogleSignIn.Auth?, user: GoogleSignIn.User?, error: Error?) {
     if let error = error {

@@ -1,9 +1,9 @@
 //
 //  AppDelegate.swift
-//  GoogleSignInSwift
+//  GoogleSignInSwift_Example
 //
-//  Created by Josh Kowarsky on 10/05/2020.
-//  Copyright (c) 2020 Josh Kowarsky. All rights reserved.
+//  Created by Josh Kowarsky on 10/5/20.
+//  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
 import GoogleSignInSwift

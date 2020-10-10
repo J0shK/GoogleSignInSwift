@@ -1,6 +1,6 @@
 //
 //  Auth.swift
-//  GoogleSignIn-Swift
+//  GoogleSignInSwift
 //
 //  Created by Josh Kowarsky on 10/5/20.
 //

@@ -1,6 +1,6 @@
 //
 //  GoogleSignIn.swift
-//  GoogleSignIn-Swift
+//  GoogleSignInSwift
 //
 //  Created by Josh Kowarsky on 10/5/20.
 //
@@ -8,12 +8,33 @@
 /// Delegate to receive authentication, user and/or error generated during sign in process.
 public protocol GoogleSignInDelegate: AnyObject {
     /**
+     The sign in process occures in web. This method contains a custom URL to be launched by the application. The user be presented with their Google accounts and select which one they would like to sign into your app with and then is redirected back to your app.
+
+     ~~~
+     // example usage:
+     func googleSignIn(shouldOpen url: URL) {
+         if #available(iOS 10.0, *) {
+             UIApplication
+                 .shared
+                 .open(url, options: [:])
+         } else {
+             UIApplication.shared.openURL(url)
+         }
+     }
+     ~~~
+
+     - Parameters:
+         - url: `URL` to open.
+     */
+    func googleSignIn(shouldOpen url: URL)
+
+    /**
      Called when sign in process completes.
 
      - Parameters:
-         - auth: Auth object on success
-         - user: User object on success if requested
-         - error: Error on failure
+         - auth: `Auth` object on success.
+         - user: `User` object on success if requested.
+         - error: `Error` on failure.
      */
     func googleSignIn(didSignIn auth: GoogleSignIn.Auth?, user: GoogleSignIn.User?, error: Error?)
 }
@@ -22,21 +43,21 @@ public protocol GoogleSignInDelegate: AnyObject {
  GoogleSignIn is a helper class for logging a user in and obtaining their Google auth credentials and/or their Google user info
  */
 public class GoogleSignIn {
-    /// Google Sign In Error
+    /// Google Sign In Error.
     public enum Error: Swift.Error {
-        /// No client ID provided
+        /// No client ID provided.
         case noClientId
-        /// No scope provided
+        /// No scope provided.
         case noScope
-        /// No refresh token
+        /// No refresh token.
         case noRefreshToken
-        /// No access token
+        /// No access token.
         case noAccessToken
-        /// Not signed in
+        /// Not signed in.
         case notSignedIn
-        /// Error decoding JSON
+        /// Error decoding JSON.
         case jsonDecodeError
-        /// No user
+        /// No user.
         case noUser
     }
     /// Completion block used when refreshing auth.
@@ -94,7 +115,6 @@ public class GoogleSignIn {
     }
 
     private var api: GoogleSignInAPI
-    private var urlOpener: GoogleSignInURLOpener
 
     /**
      Manual instantiation is generally used for testing.
@@ -102,13 +122,9 @@ public class GoogleSignIn {
      - Parameters:
         - api: API conforming to `GoogleSignInAPI`.
         - storage: Storage conforming to `GoogleSignInStorage`.
-        - urlOpener: URL opener conforming to `GoogleSignInURLOpener`.
      */
-    public init(api: GoogleSignInAPI = API(),
-                storage: GoogleSignInStorage = DefaultStorage(),
-                urlOpener: GoogleSignInURLOpener = URLOpener()) {
+    public init(api: GoogleSignInAPI = API(), storage: GoogleSignInStorage = DefaultStorage()) {
         self.api = api
-        self.urlOpener = urlOpener
         self.storage = storage
         auth = storage.get()
         user = storage.get()
@@ -157,6 +173,10 @@ public class GoogleSignIn {
         return true
     }
 
+    public func signInURL() throws -> URL {
+        return try Request.auth(clientId: clientId, scopes: scopes, redirectURI: redirectURI).asURL()
+    }
+
     /// Begin process of signing into Google.
     public func signIn() {
         guard !clientId.isEmpty else {
@@ -168,8 +188,8 @@ public class GoogleSignIn {
             return
         }
         do {
-            let url = try Request.auth(clientId: clientId, scopes: scopes, redirectURI: redirectURI).asURL()
-            urlOpener.open(url: url)
+            let url = try signInURL()
+            delegate?.googleSignIn(shouldOpen: url)
         } catch {
             delegate?.googleSignIn(didSignIn: nil, user: nil, error: error)
         }

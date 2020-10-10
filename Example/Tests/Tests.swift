@@ -8,8 +8,7 @@ class TableOfContentsSpec: QuickSpec {
     override func spec() {
         let mockApi = MockAPI()
         let mockStorage = MockStorage()
-        let mockURLOpener = MockURLOpener()
-        let mockGoogleSignIn = GoogleSignIn(api: mockApi, storage: mockStorage, urlOpener: mockURLOpener)
+        let mockGoogleSignIn = GoogleSignIn(api: mockApi, storage: mockStorage)
         mockGoogleSignIn.clientId = "this-is-a-client-id"
         mockGoogleSignIn.addScope("this-is-a-scope")
 
@@ -22,7 +21,8 @@ class TableOfContentsSpec: QuickSpec {
                 let code = "1234"
 
                 it("opens the correct URL") {
-                    let components = URLComponents(url: mockURLOpener.lastURL!, resolvingAgainstBaseURL: true)
+                    let signInURL = try! mockGoogleSignIn.signInURL()
+                    let components = URLComponents(url: signInURL, resolvingAgainstBaseURL: true)
 
                     expect(components?.host).to(equal("accounts.google.com"))
                     expect(components?.path).to(equal("/o/oauth2/v2/auth"))

@@ -1,9 +1,9 @@
 //
 //  ViewController.swift
-//  GoogleSignInSwift
+//  GoogleSignInSwift_Example
 //
-//  Created by Josh Kowarsky on 10/05/2020.
-//  Copyright (c) 2020 Josh Kowarsky. All rights reserved.
+//  Created by Josh Kowarsky on 10/5/20.
+//  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
 import GoogleSignInSwift
@@ -80,6 +80,17 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: GoogleSignInDelegate {
+    
+    func googleSignIn(shouldOpen url: URL) {
+        if #available(iOS 10.0, *) {
+            UIApplication
+                .shared
+                .open(url, options: [:])
+        } else {
+            UIApplication.shared.openURL(url)
+        }
+    }
+
     func googleSignIn(didSignIn auth: GoogleSignIn.Auth?, user: GoogleSignIn.User?, error: Error?) {
         if let error = error {
             print("Sign in error: \(error)")

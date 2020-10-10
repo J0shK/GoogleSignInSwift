@@ -15,7 +15,6 @@
 		4DBEC5FC252EF08800E8A39C /* MockAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DBEC5FB252EF08800E8A39C /* MockAPI.swift */; };
 		4DBEC600252EF0AE00E8A39C /* MockRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DBEC5FF252EF0AE00E8A39C /* MockRequest.swift */; };
 		4DBEC606252EF0CA00E8A39C /* MockStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DBEC605252EF0CA00E8A39C /* MockStorage.swift */; };
-		4DBEC60A252EF0E300E8A39C /* MockURLOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DBEC609252EF0E300E8A39C /* MockURLOpener.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
@@ -43,7 +42,6 @@
 		4DBEC5FB252EF08800E8A39C /* MockAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAPI.swift; sourceTree = "<group>"; };
 		4DBEC5FF252EF0AE00E8A39C /* MockRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRequest.swift; sourceTree = "<group>"; };
 		4DBEC605252EF0CA00E8A39C /* MockStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockStorage.swift; sourceTree = "<group>"; };
-		4DBEC609252EF0E300E8A39C /* MockURLOpener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLOpener.swift; sourceTree = "<group>"; };
 		516F0F29A4E6B0AC39679C49 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* GoogleSignInSwift_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoogleSignInSwift_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -98,7 +96,6 @@
 				4DBEC5FB252EF08800E8A39C /* MockAPI.swift */,
 				4DBEC5FF252EF0AE00E8A39C /* MockRequest.swift */,
 				4DBEC605252EF0CA00E8A39C /* MockStorage.swift */,
-				4DBEC609252EF0E300E8A39C /* MockURLOpener.swift */,
 			);
 			name = Mocks;
 			sourceTree = "<group>";
@@ -403,7 +400,6 @@
 				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
 				4DBEC600252EF0AE00E8A39C /* MockRequest.swift in Sources */,
 				4DBEC606252EF0CA00E8A39C /* MockStorage.swift in Sources */,
-				4DBEC60A252EF0E300E8A39C /* MockURLOpener.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
