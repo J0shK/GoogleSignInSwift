@@ -74,12 +74,7 @@ public class GoogleSignIn {
     public weak var delegate: GoogleSignInDelegate?
 
     /// Storage object for storing auth credentials and/or user. Replace with your own Storage conforming to `GoogleSignInStorage`.
-    public var storage: GoogleSignInStorage {
-        didSet {
-            auth = storage.get()
-            user = storage.get()
-        }
-    }
+    public var storage: GoogleSignInStorage
 
     /// Google app client ID
     public var clientId: String = ""
@@ -101,9 +96,23 @@ public class GoogleSignIn {
     public var email = false
 
     /// Signed in users `Auth` object.
-    public var auth: Auth?
+    public var auth: Auth? {
+        get {
+            return storage.get()
+        }
+        set {
+            storage.set(auth: newValue)
+        }
+    }
     /// Signed in users `User` object.
-    public var user: User?
+    public var user: User? {
+        get {
+            return storage.get()
+        }
+        set {
+            storage.set(user: newValue)
+        }
+    }
 
     /// Redirect URI generated from `clientId`.
     public var redirectURI: String {
@@ -126,8 +135,6 @@ public class GoogleSignIn {
     public init(api: GoogleSignInAPI = API(), storage: GoogleSignInStorage = DefaultStorage()) {
         self.api = api
         self.storage = storage
-        auth = storage.get()
-        user = storage.get()
     }
 
     /// Add Google API scope.
@@ -203,7 +210,6 @@ public class GoogleSignIn {
      */
     @discardableResult
     public func signOut() -> Bool {
-        auth = nil
         return storage.clear()
     }
 
@@ -237,8 +243,7 @@ public class GoogleSignIn {
                 } else {
                     self?.auth = auth
                 }
-                
-                self?.storage.set(auth: self?.auth)
+
                 completion?(self?.auth, nil)
             }
         }
@@ -281,7 +286,6 @@ public class GoogleSignIn {
                     return
                 }
                 self?.auth = auth
-                self?.storage.set(auth: auth)
                 self?.getProfile { user, error in
                     if let error = error {
                         self?.delegate?.googleSignIn(didSignIn: auth, user: nil, error: error)
@@ -321,7 +325,6 @@ public class GoogleSignIn {
                     return
                 }
                 self?.user = user
-                self?.storage.set(user: user)
                 completion(user, nil)
             }
         }
