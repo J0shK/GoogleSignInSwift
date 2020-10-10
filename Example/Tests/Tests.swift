@@ -146,6 +146,17 @@ class TableOfContentsSpec: QuickSpec {
                     expect(clientId).to(equal(mockGoogleSignIn.clientId))
                 }
             }
+
+            describe("refresh tokens") {
+                it("can be added together") {
+                    let auth1 = GoogleSignIn.Auth(accessToken: "access1", expiresAt: Date(), refreshToken: "refresh1", scope: "scope1", tokenType: .Bearer, idToken: "id1")
+                    let auth2 = GoogleSignIn.Auth(accessToken: "access2", expiresAt: Date().addingTimeInterval(100), refreshToken: nil, scope: "scope2", tokenType: .Bearer, idToken: "id2")
+
+                    let auth3: GoogleSignIn.Auth = auth1 + auth2
+                    expect(auth3.accessToken).to(equal(auth2.accessToken))
+                    expect(auth3.refreshToken).to(equal(auth1.refreshToken))
+                }
+            }
         }
     }
 }

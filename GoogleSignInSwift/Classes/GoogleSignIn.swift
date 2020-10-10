@@ -197,11 +197,11 @@ public class GoogleSignIn {
             completion?(nil, Error.noClientId)
             return
         }
-        guard let auth = auth, auth.refreshToken != nil else {
+        guard let auth = auth, let refreshToken = auth.refreshToken else {
             completion?(nil, Error.noRefreshToken)
             return
         }
-        api.request(Request.refreshToken(clientId: clientId, refreshToken: auth.refreshToken ?? "")) { [weak self] result in
+        api.request(Request.refreshToken(clientId: clientId, refreshToken: refreshToken)) { [weak self] result in
             switch result {
             case .error(let error):
                 completion?(nil, error)
@@ -218,7 +218,7 @@ public class GoogleSignIn {
                     self?.auth = auth
                 }
                 
-                self?.storage.set(auth: auth)
+                self?.storage.set(auth: self?.auth)
                 completion?(self?.auth, nil)
             }
         }

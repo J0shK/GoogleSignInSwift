@@ -41,7 +41,7 @@ public extension GoogleSignIn {
             return Date().addingTimeInterval(TimeInterval(expiresSeconds))
         }
 
-        static func +(lhs: GoogleSignIn.Auth, rhs: GoogleSignIn.Auth) -> GoogleSignIn.Auth {
+        public static func +(lhs: GoogleSignIn.Auth, rhs: GoogleSignIn.Auth) -> GoogleSignIn.Auth {
             let latest = lhs.expiresAt > rhs.expiresAt ? lhs : rhs
             let older = lhs.expiresAt < rhs.expiresAt ? lhs : rhs
             if latest.refreshToken == nil {
