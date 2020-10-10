@@ -50,6 +50,6 @@ class ProfileView: UIView {
     func configure() {
         nameLabel.text = GoogleSignIn.shared.user?.name
         guard let url = GoogleSignIn.shared.user?.picture else { return }
-        imageView.af_setImage(withURL: url)
+        imageView.af.setImage(withURL: url)
     }
 }
