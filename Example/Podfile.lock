@@ -2,37 +2,23 @@ PODS:
   - Alamofire (4.9.1)
   - AlamofireImage (3.6.0):
     - Alamofire (~> 4.9)
-  - FBSnapshotTestCase (2.1.4):
-    - FBSnapshotTestCase/SwiftSupport (= 2.1.4)
-  - FBSnapshotTestCase/Core (2.1.4)
-  - FBSnapshotTestCase/SwiftSupport (2.1.4):
-    - FBSnapshotTestCase/Core
-  - GoogleSignInSwift (0.2.0)
-  - Nimble (7.3.4)
-  - Nimble-Snapshots (6.3.0):
-    - Nimble-Snapshots/Core (= 6.3.0)
-  - Nimble-Snapshots/Core (6.3.0):
-    - FBSnapshotTestCase (~> 2.0)
-    - Nimble (~> 7.0)
-  - Quick (1.2.0)
+  - GoogleSignInSwift (0.3.0)
+  - Nimble (8.1.2)
+  - Quick (3.0.0)
   - SnapKit (4.2.0)
 
 DEPENDENCIES:
   - AlamofireImage
-  - FBSnapshotTestCase (~> 2.1.4)
   - GoogleSignInSwift (from `../`)
-  - Nimble (~> 7.0)
-  - Nimble-Snapshots (~> 6.3.0)
-  - Quick (~> 1.2.0)
+  - Nimble
+  - Quick
   - SnapKit
 
 SPEC REPOS:
   trunk:
     - Alamofire
     - AlamofireImage
-    - FBSnapshotTestCase
     - Nimble
-    - Nimble-Snapshots
     - Quick
     - SnapKit
 
@@ -43,13 +29,11 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   AlamofireImage: be9963c6582d68b39e89191f64c82a7d7bf40fdd
-  FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
-  GoogleSignInSwift: 5ae1295933dc02692a9c32ac7d28a9d8254feed8
-  Nimble: 051e3d8912d40138fa5591c78594f95fb172af37
-  Nimble-Snapshots: f5459b5b091678dc942d03ec4741cacb58ba4a52
-  Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
+  GoogleSignInSwift: cdfd2f6bdb25e9bfa08acc20eb1fb5c338efb493
+  Nimble: 3864815b4703c7ebffba875973c70e854489fbae
+  Quick: 6d9559f40647bc4d510103842ef2fdd882d753e2
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
 
-PODFILE CHECKSUM: 72b02db735f326d2689dcf8ff0a82e0ee565b33a
+PODFILE CHECKSUM: 3d3f10f3b21be2b74540ec89421caa198300814d
 
 COCOAPODS: 1.9.3
