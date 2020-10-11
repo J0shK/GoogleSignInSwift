@@ -11,7 +11,7 @@ DEPENDENCIES:
   - AlamofireImage
   - GoogleSignInSwift (from `../`)
   - Nimble
-  - Quick
+  - Quick (from `https://github.com/Quick/Quick.git`, branch `master`)
   - SnapKit
 
 SPEC REPOS:
@@ -19,21 +19,28 @@ SPEC REPOS:
     - Alamofire
     - AlamofireImage
     - Nimble
-    - Quick
     - SnapKit
 
 EXTERNAL SOURCES:
   GoogleSignInSwift:
     :path: "../"
+  Quick:
+    :branch: master
+    :git: https://github.com/Quick/Quick.git
+
+CHECKOUT OPTIONS:
+  Quick:
+    :commit: 00ff94d7d8f4f1e8609419119acd12a514e276b3
+    :git: https://github.com/Quick/Quick.git
 
 SPEC CHECKSUMS:
   Alamofire: 814429acc853c6c54ff123fc3d2ef66803823ce0
   AlamofireImage: c4a2ba349885fb3064feb74d2e547bd42ce9be10
   GoogleSignInSwift: cdfd2f6bdb25e9bfa08acc20eb1fb5c338efb493
   Nimble: 3b4ec3fd40f1dc178058e0981107721c615643d8
-  Quick: 6d9559f40647bc4d510103842ef2fdd882d753e2
+  Quick: e3073b67c415e9793b3efa45273d24fd383cdd6c
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
 
-PODFILE CHECKSUM: 3d3f10f3b21be2b74540ec89421caa198300814d
+PODFILE CHECKSUM: be40a590359f88f3df986a671f2c9ec6dd817e16
 
 COCOAPODS: 1.9.3

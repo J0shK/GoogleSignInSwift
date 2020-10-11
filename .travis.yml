@@ -4,13 +4,11 @@
 
 language: objective-c
 osx_image: xcode12.2
-xcode_project: Example/GoogleSignInSwift.xcworkspace
-xcode_scheme: GoogleSignInSwift-Example
-xcode_sdk: iphonesimulator14.2
 cache: cocoapods
 podfile: Example/Podfile
 before_install:
 - gem install cocoapods # Since Travis is not always on latest version
 - pod install --project-directory=Example
 script:
+- set -o pipefail && xcodebuild -workspace Example/GoogleSignInSwift.xcworkspace -scheme GoogleSignInSwift-Example -destination platform\=iOS\ Simulator,OS\=14.2,name\=iPhone\ 11 build test | xcpretty
 - pod lib lint
