@@ -54,7 +54,7 @@
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		72BF246D94EE555231E4396E /* Pods_GoogleSignInSwift_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GoogleSignInSwift_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8F733D4F99BA86EFFE31544 /* Pods-GoogleSignInSwift_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoogleSignInSwift_Example.debug.xcconfig"; path = "Target Support Files/Pods-GoogleSignInSwift_Example/Pods-GoogleSignInSwift_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		D4F9773AC81B830F92EB96E9 /* GoogleSignInSwift.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = GoogleSignInSwift.podspec; path = ../GoogleSignInSwift.podspec; sourceTree = "<group>"; };
+		D4F9773AC81B830F92EB96E9 /* GoogleSignInSwift.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = GoogleSignInSwift.podspec; path = ../GoogleSignInSwift.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		D5F43F3F121F0F8C96A5FBB2 /* Pods_GoogleSignInSwift_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GoogleSignInSwift_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAA460BCD0987FD3A5C2B6FA /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */

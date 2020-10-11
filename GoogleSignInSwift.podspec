@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'GoogleSignInSwift'
-  s.version          = '0.3.0'
+  s.version          = '0.3.1'
   s.summary          = 'Google Sign In allows users to sign in with their Google account.'
   s.swift_versions   = '5.0'
   s.framework        = 'AuthenticationServices'
